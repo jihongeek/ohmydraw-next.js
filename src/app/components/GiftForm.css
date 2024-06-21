@@ -1,0 +1,45 @@
+.GiftForm{
+    width : 210px
+}
+input[type="file"] {
+    display: none;
+}
+.form_label.gift_name, .form_label.gift_file{
+    text-align: left;
+}
+input.gift_name { 
+    width : 186px;
+    height: 32px;
+}
+input.file_name{
+    width: 186px;
+    height: 32px;
+    background-color : #E2D8FF;
+    color: #8975C4;
+}
+label {
+    margin: 5px auto;
+    display: block;
+    width: 112px;
+    height: 32px;
+}
+.file_upload_button {
+    margin: 0 auto;
+    width : 112px;
+    font-size: 16px;
+    font-weight: bold;
+    color : white;
+    background-color: #40AFFF;
+    border-color: #2a82c2;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding-block : 6px;
+}
+.file_upload_button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.file_upload_button:active {
+    background-color: #216696;
+}

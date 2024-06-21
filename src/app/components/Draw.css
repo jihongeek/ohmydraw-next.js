@@ -1,0 +1,30 @@
+.Draw {
+    margin: 0 auto;
+    padding-block: 20px;
+    max-width: 690px;
+    height: 60vh;
+}
+.winner_name {
+    font-size: 96px;
+    font-weight: bold;
+    margin-block: 42px;
+    color : #3E2686;
+}
+.win_label {
+    font-size: 32px;
+    font-weight: bold;
+    margin-block: 42px;
+    color : #3E2686;
+}
+.send_gift_response_label{
+    color :#3E2686;
+}
+.winner_wrapper {
+    margin-block: 5vh;
+}
+
+.send_gift_response_label {
+    font-size: 36px;
+    font-weight: normal;
+    margin-block: 0px;
+}

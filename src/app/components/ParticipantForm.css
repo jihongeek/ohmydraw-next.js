@@ -1,0 +1,18 @@
+.ParticipantForm
+{
+    width : 210px
+}
+.form_label.email, .form_label.name{
+    text-align: left;
+    margin-block : 4px;
+    font-size: 20px;
+}
+
+input[type="text"].name_input { 
+    width : 186px;
+    height: 32px;
+}
+input[type="text"].email_input { 
+    width : 186px;
+    height: 32px;
+}
