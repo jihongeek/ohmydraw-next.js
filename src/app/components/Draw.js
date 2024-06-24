@@ -21,7 +21,7 @@ const Draw = ({drawData,doDraw,setDrawData}) => {
     const onClickSendGiftButton = ()=>{
         setSendStatus('sending');
         reader(drawData.giftArray[0].giftFile).then((file)=>{
-        fetch("http://localhost:3001/sent-gifts", {
+        fetch("/sent-gifts", {
             method : "POST",
             headers: {"Content-Type" : "application/json"},
             body : JSON.stringify({
