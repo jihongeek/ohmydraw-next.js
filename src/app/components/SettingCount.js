@@ -3,6 +3,7 @@ import { useState } from 'react';
 const SettingCount = ({moveToNextStep,drawData,setDrawData}) => {
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
+    const [nowPassword,setPassword] = useState(drawData.nowPassword);
     const participantErrorMessages = {
         "out_of_range" : "참가자 수는 1 ~ 10명 사이 이어야 합니다.",
     }
@@ -28,7 +29,8 @@ const SettingCount = ({moveToNextStep,drawData,setDrawData}) => {
         setDrawData({
             ...drawData,
             participantCount : nowParticipantCount,
-            winnerCount : nowWinnerCount
+            winnerCount : nowWinnerCount,
+            sendKey : nowPassword
         });
         moveToNextStep();
     }
@@ -52,11 +54,18 @@ const SettingCount = ({moveToNextStep,drawData,setDrawData}) => {
             setWinnerCount(parseInt(e.target.value));
         }
     }
+    const onPasswordChange = (e) => {
+        setPassword(e.target.value);
+    }
     return (
         <div className = "setting_block SettingCount">
             <p className="setting_label">추첨설정</p>
             <p className="step_label">인원 정하기</p>
             <div className="form_wrapper">
+                <div className="participant_count_wrapper">
+                    <p className="form_label participant" >비밀번호</p>
+                    <input type="password" defaultValue={drawData.sendKey} onChange={onPasswordChange}/>
+                </div>
                 <div className="participant_count_wrapper">
                     <p className="form_label participant" >참가인원</p>
                     <input type="number" defaultValue={nowParticipantCount} onChange={onParticipantCountChange} style={{borderColor :  participantErrorStatus !== "none"? "#E63535": ''}}></input>

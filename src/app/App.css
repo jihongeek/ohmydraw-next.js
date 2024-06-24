@@ -53,7 +53,7 @@ input[type="number"]::-webkit-inner-spin-button {
     -moz-appearance: none;
     appearance: none;
 }
-input[type="number"]{
+input[type="number"],input[type="password"]{
     margin : 5px;
     width : 92px;
     height: 32px;
@@ -74,7 +74,7 @@ input{
     padding-inline: 9px;
 }
 
-input[type="number"]:focus, input[type="text"]:focus{
+input[type="number"]:focus, input[type="text"]:focus, input[type="password"]{
     outline: none;
     border-color: #6C4FC1;
     border-width: 2px;

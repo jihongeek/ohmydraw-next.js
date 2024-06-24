@@ -28,7 +28,8 @@ const Draw = ({drawData,doDraw,setDrawData}) => {
                 "winnerEmail" : drawData.participantArray[drawData.nowWinnerId].email,
                 "winnerName" : drawData.participantArray[drawData.nowWinnerId].name,
                 "giftName" : drawData.giftArray[0].giftName,
-                "giftFile" : file
+                "giftFile" : file,
+                "sendKey" : drawData.sendKey
             })
         })
             .then((response) => {
