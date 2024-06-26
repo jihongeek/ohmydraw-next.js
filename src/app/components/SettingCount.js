@@ -30,7 +30,6 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep,drawData,setDrawData}) 
             ...drawData,
             participantCount : nowParticipantCount,
             winnerCount : nowWinnerCount,
-            sendKey : nowPassword
         });
         moveToNextStep();
     }
@@ -58,9 +57,6 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep,drawData,setDrawData}) 
         {
             setWinnerCount(parseInt(e.target.value));
         }
-    }
-    const onPasswordChange = (e) => {
-        setPassword(e.target.value);
     }
     return (
         <div className = "setting_block SettingCount">
