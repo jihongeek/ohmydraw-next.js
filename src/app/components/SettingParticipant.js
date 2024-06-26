@@ -59,7 +59,7 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw,dr
         if (drawData.mode === "no-gift" &&  drawData.participantArray.length > 0)
         {
             doDraw(false);
-            moveStep(3);
+            moveStep(4);
         }
     }
         ,[drawData,doDraw,moveStep]        
