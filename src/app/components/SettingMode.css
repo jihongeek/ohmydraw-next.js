@@ -1,0 +1,13 @@
+.SettingMode label{
+    margin: 2px auto;
+    display: block;
+    color : #3E2686;
+}
+[type="radio"] {
+        width: 25px;
+        height: 25px;
+        border: 2px solid #6C4FC1;
+        accent-color: #AE2AFF;
+        border-radius: 100%;
+        background-color: white;
+      }
