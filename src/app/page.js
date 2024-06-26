@@ -3,6 +3,7 @@ import './App.css';
 import SettingCount from './components/SettingCount';
 import SettingParticipant from './components/SettingParticipant';
 import SettingGift from './components/SettingGift'
+import SettingMode from './components/SettingMode'
 import Draw from './components/Draw'
 import { useState } from 'react';
 import Image from "next/image";
@@ -11,6 +12,7 @@ export default function Home() {
   const [stepIndex, setStepIndex] = useState(0);
   const [drawData, setDrawData] = useState({
     sendKey : "",
+    mode : "no-gift",
     participantCount: 0,
     winnerCount: 0,
     nowRound: -1,
@@ -19,6 +21,10 @@ export default function Home() {
     participantArray: [],
     giftArray: []
   });
+
+  const moveStep = (stepIndex) => {
+    setStepIndex(stepIndex);
+  }  
   const moveToNextStep = () => {
     setStepIndex(stepIndex + 1);
   }
@@ -49,25 +55,34 @@ export default function Home() {
       <Image src="/logo.svg" height={241} width={468} alt="오마이드로우 로고" />
       {
         {
-          0: <SettingCount
+
+          0: <SettingMode
             moveToNextStep={moveToNextStep}
             drawData={drawData}
             setDrawData={setDrawData}
           />,
-          1: <SettingParticipant
+          1: <SettingCount
             moveToNextStep={moveToNextStep}
             moveToPreviousStep={moveToPreviousStep}
             drawData={drawData}
             setDrawData={setDrawData}
           />,
-          2: <SettingGift
+          2: <SettingParticipant
+            moveToNextStep={moveToNextStep}
+            moveToPreviousStep={moveToPreviousStep}
+            moveStep={moveStep}
+            drawData={drawData}
+            doDraw = {doDraw}
+            setDrawData={setDrawData}
+          />,
+          3: <SettingGift
             moveToPreviousStep={moveToPreviousStep}
             moveToNextStep={moveToNextStep}
             drawData={drawData}
             doDraw={doDraw}
             setDrawData={setDrawData}
           />,
-          3: <Draw
+          4: <Draw
             drawData={drawData}
             doDraw={doDraw}
             setDrawData={setDrawData}
