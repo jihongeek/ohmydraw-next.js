@@ -17,7 +17,7 @@ input.file_name{
     background-color : #E2D8FF;
     color: #8975C4;
 }
-label {
+.GiftForm label {
     margin: 5px auto;
     display: block;
     width: 112px;
