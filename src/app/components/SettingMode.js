@@ -26,9 +26,17 @@ const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
                     <p className="form_label participant" >경품 모드</p>
                     
                     <label htmlFor ="giftMode">경품 직접 전송</label>
-                    <input type="radio" id ="giftMode"value="gift" onChange={onModeChange} name="mode" defaultChecked/>
+                    {
+                        nowMode === "gift" ?
+                        <input type="radio" id ="giftMode"value="gift" onChange={onModeChange} name="mode" defaultChecked/>
+                        : <input type="radio" id ="giftMode"value="gift" onChange={onModeChange} name="mode"/>
+                    }
                     <label htmlFor ="no-giftMode">단순 추첨만</label>
-                    <input type="radio"  id ="no-giftMode"value = "no-gift" onChange={onModeChange} name= "mode"/>
+                    {
+                        nowMode === "no-gift" ?
+                        <input type="radio"  id ="no-giftMode"value = "no-gift" onChange={onModeChange} name= "mode" defaultChecked/>
+                        : <input type="radio"  id ="no-giftMode"value = "no-gift" onChange={onModeChange} name= "mode"/>
+                    }
                 </div>
                 {
                     nowMode === "gift"?
