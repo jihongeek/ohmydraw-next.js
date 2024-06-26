@@ -1,8 +1,8 @@
 import ParticipantForm from "./ParticipantForm";
 import './SettingParticipant.css';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 
-const SettingParticiant = ({moveToNextStep,moveToPreviousStep,drawData,setDrawData}) => {
+const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw,drawData,setDrawData}) => {
     
     const formIndexArray = [...Array(drawData.participantCount)].map((x,index) => index);
     const [errorDataArray,setErrorData] = useState(formIndexArray.map(() => { return {nameErrorStatus : "none", emailErrorStatus : "none"}}));
@@ -26,7 +26,7 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,drawData,setDrawDa
                 isErrorOccured = true;
                 errorDataToUpdate.nameErrorStatus = "name_wrong_character";
             }
-            if (emailValidationRegex.test(participantDataArray[index].email) === false)
+            if (drawData.mode === "gift" && emailValidationRegex.test(participantDataArray[index].email) === false)
             {
                 isErrorOccured = true;
                 errorDataToUpdate.emailErrorStatus = "email_invalid";
@@ -45,13 +45,25 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,drawData,setDrawDa
             ...drawData,
             participantArray : participantDataArray
         })
-
-        moveToNextStep();
+        if (drawData.mode !== "no-gift")
+        {
+            moveToNextStep();
+        }
     }
     const onClickPreviousButton = () => {
         setDrawData({...drawData,participantArray : []});
         moveToPreviousStep();
     }
+
+    useEffect(() => {
+        if (drawData.mode === "no-gift" &&  drawData.participantArray.length > 0)
+        {
+            doDraw(false);
+            moveStep(3);
+        }
+    }
+        ,[drawData,doDraw,moveStep]        
+    )
     return (
         <div className = "setting_block SettingParticipant">
             <p className="setting_label">추첨설정</p>
@@ -64,13 +76,15 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,drawData,setDrawDa
                         participantDataArray = {participantDataArray} 
                         setParticipantData = {setParticipantData}  
                         nowIndex = {index} key={index}
+                        mode={drawData.mode}
                         />
                     })
                 }
             </div>
             <div className ="button_wrapper">
                 <button className = "backward_button previous" onClick = {onClickPreviousButton}>이전</button>
-                <button className = "forward_button next" onClick = {onClickNextButton}>다음</button>
+                {drawData.mode === "gift" ? <button className = "forward_button next" onClick = {onClickNextButton}>다음</button> : ''}
+                {drawData.mode === "no-gift" ? <button className = "forward_button start_draw" onClick={onClickNextButton}>추첨하기</button> : ''}
             </div>
         </div>
     );

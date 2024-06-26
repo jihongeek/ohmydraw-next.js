@@ -19,6 +19,10 @@ const Draw = ({drawData,doDraw,setDrawData}) => {
       fr.readAsDataURL(file);
     });
     const onClickSendGiftButton = ()=>{
+        if (drawData.mode === "no-gift") {
+            setSendStatus('success');
+            return;
+        }        
         setSendStatus('sending');
         reader(drawData.giftArray[0].giftFile).then((file)=>{
         fetch("/sent-gifts", {
@@ -43,7 +47,12 @@ const Draw = ({drawData,doDraw,setDrawData}) => {
                 }           
             })})
     }
-    const onClickDrawNextButton = ()=>{
+    const onClickDrawNextButton = (mode)=>{
+        if (mode === "no-gift")
+        {
+            setSendStatus('success');
+            return;
+        }
         setSendStatus('ready');
         doDraw(false,nowParticipantArray);
     }
@@ -62,21 +71,36 @@ const Draw = ({drawData,doDraw,setDrawData}) => {
         }
     },
     [sendStatus])
+    useEffect(()=>{
+        if (sendStatus === 'success' && drawData.mode === "no-gift")
+        {
+            setSendStatus("ready");
+            doDraw(false,nowParticipantArray)
+        }
+    },
+    [drawData])
     return (
         <div className = "Draw">
-            <p className = "send_gift_response_label">경품 발송
-                <span style = {{fontWeight:"bold", color : sendStatusMessages[sendStatus].color}}>
-                    {"  " + sendStatusMessages[sendStatus].text}
-                </span>
-            </p>
+            {   
+                drawData.mode === "gift" ?
+                <p className = "send_gift_response_label">경품 발송
+                    <span style = {{fontWeight:"bold", color : sendStatusMessages[sendStatus].color}}>
+                        {"  " + sendStatusMessages[sendStatus].text}
+                    </span>
+                </p>
+                : ''
+            }
             <div className = "winner_wrapper">
                 <p className = "winner_name">{drawData.participantArray[drawData.nowWinnerId].name}</p>
                 <p className = "win_label">당첨</p>
             </div>
             <div className = "button_wraper">
-                {sendStatus === 'success' || (sendStatus === 'ready' && nowParticipantArray.length < 2) ? '' : <button className="backward_button redraw" onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</button>}
-                {sendStatus === 'success' || nowGiftArray.length === 0 ? '' : <button className="forward_button send_gift" onClick={onClickSendGiftButton}>경품 발송</button>}
-                {sendStatus === 'success' && nowParticipantArray.length > 0 && nowGiftArray.length > 0  ? <button className="forward_button draw_next" onClick={onClickDrawNextButton}>다음 추첨</button> : ''}
+                {((sendStatus === 'success' || (sendStatus === 'ready' && nowParticipantArray.length < 2)) || drawData.mode === "no-gift") ? '' : <button className="backward_button redraw" onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</button>}
+                {(sendStatus === 'success' || nowGiftArray.length === 0) || drawData.mode === "no-gift"? '' : <button className="forward_button send_gift" onClick={onClickSendGiftButton}>경품 발송</button>}
+                {(sendStatus === 'success' && nowParticipantArray.length > 0 && nowGiftArray.length > 0) && drawData.mode === "gift" ? <button className="forward_button draw_next" onClick={onClickDrawNextButton}>다음 추첨</button> : ''}
+                
+                {(sendStatus === 'ready' && nowParticipantArray.length < 2) ? '' : <button className="backward_button redraw" onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</button>}
+                {sendStatus === 'ready' && nowParticipantArray.length > 1 ? <button className="forward_button draw_next" onClick={()=>{onClickDrawNextButton(drawData.mode)}}>다음 추첨</button> : ''}
             </div>
         </div>
     );
