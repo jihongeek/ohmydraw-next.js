@@ -1,5 +1,6 @@
+import Draw from './Draw'
 import './ParticipantForm.css'
-const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataArray}) => {
+const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataArray,mode}) => {
     const errorMessages = {
         "name_wrong_character" : "이름은 특수문자를 제외한 영한문자 그리고 숫자만 가능합니다.", 
         "email_invalid" : "올바르지 않은 이메일 형식입니다."
@@ -32,15 +33,21 @@ const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataA
                 style={ errorData.nameErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
             />
             {  errorData.nameErrorStatus !== "none" && <p className = "error_label name">{errorMessages[errorData.nameErrorStatus]}</p>}
-            <p className = "form_label email">이메일</p>
-            <input 
-                className = "email_input" 
-                type = "text" 
-                defaultValue={participantDataArray[nowIndex].email}
-                onChange={onEmailInputChange}
-                style={ errorData.emailErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
-            />  
-            {  errorData.emailErrorStatus !== "none" && <p className = "error_label email">{errorMessages[errorData.emailErrorStatus]}</p>}
+            {   
+                mode === "gift"?
+                <>
+                    <p className = "form_label email">이메일</p>
+                    <input 
+                        className = "email_input" 
+                        type = "text" 
+                        defaultValue={participantDataArray[nowIndex].email}
+                        onChange={onEmailInputChange}
+                        style={ errorData.emailErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                    />  
+                    {  errorData.emailErrorStatus !== "none" && <p className = "error_label email">{errorMessages[errorData.emailErrorStatus]}</p>}
+                </>
+                :''
+            }
         </div>
     );
 }
