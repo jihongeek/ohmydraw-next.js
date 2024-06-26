@@ -2,7 +2,7 @@ import './SettingMode.css';
 import { useState } from 'react'; 
 const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
     const [nowMode,setMode] = useState(drawData.mode);
-    const [nowPassword,setPassword] = useState(drawData.nowPassword);
+    const [nowPassword,setPassword] = useState(drawData.sendKey);
     const onClickNextButton = () => {
         setDrawData({
             ...drawData,

@@ -12,7 +12,7 @@ export default function Home() {
   const [stepIndex, setStepIndex] = useState(0);
   const [drawData, setDrawData] = useState({
     sendKey : "",
-    mode : "no-gift",
+    mode : "gift",
     participantCount: 0,
     winnerCount: 0,
     nowRound: -1,
