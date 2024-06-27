@@ -1,5 +1,5 @@
 import './SettingMode.css';
-import { useEffect, useState } from 'react'; 
+import { useState } from 'react'; 
 const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
     const [nowMode,setMode] = useState(drawData.mode);
     const [nowPassword,setPassword] = useState(drawData.sendKey);

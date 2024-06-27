@@ -3,7 +3,6 @@ import { useState } from 'react';
 const SettingCount = ({moveToPreviousStep,moveToNextStep,drawData,setDrawData}) => {
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
-    const [nowPassword,setPassword] = useState(drawData.nowPassword);
     const participantErrorMessages = {
         "out_of_range" : "참가자 수는 1 ~ 10명 사이 이어야 합니다.",
     }
