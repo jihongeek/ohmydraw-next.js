@@ -5,8 +5,9 @@ const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
     const [nowPassword,setPassword] = useState(drawData.sendKey);
     const [passwordErrorStatus,setPasswordError] = useState("none");
     const passwordErrorMessages = {
-        "invalid" : "올바르지 않은 비밀번호 입니다.",
-        "inavailable" : "현재 비밀번호를 확인할 수 없습니다."
+        "invalid" : "올바르지 않은 비밀번호입니다.",
+        "inavailable" : "현재 비밀번호를 확인할 수 없습니다.",
+        "empty" : "비밀번호를 입력해 주세요."
     };
     const onClickNextButton = async () => {
         if (nowMode === "no-gift"){
@@ -17,6 +18,10 @@ const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
             moveToNextStep();
             return;
         }
+        if (nowPassword === ""){
+            setPasswordError("empty");
+            return;
+        } 
         const response = await fetch("/sendkey/validate",{
             method : "POST",
             headers : {"Content-Type" : "application/json"},
