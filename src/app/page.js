@@ -52,7 +52,7 @@ export default function Home() {
   }
   return (
     <div className="App">
-      <Image src="/logo.svg" height={241} width={468} alt="오마이드로우 로고" />
+      <Image priority={true} src="/logo.svg" height={241} width={468} alt="오마이드로우 로고" />
       {
         {
 
