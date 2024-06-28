@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./SettingGift.css";
 import GiftForm from "./GiftForm";
+import { drawDataContext } from "../drawDataContext";
 
-const SettingGift = ({ moveToPreviousStep,drawData,setDrawData,doDraw,moveToNextStep }) => {
+const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
+    const {drawData,setDrawData} = useContext(drawDataContext);
     const [giftDataArray,setGiftData] = useState([...Array(drawData.winnerCount)].map(
         (_, index) => { return { id : index, giftName : "", giftFile : new File([],"파일 이름")} }
     ));

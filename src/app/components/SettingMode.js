@@ -1,6 +1,8 @@
 import './SettingMode.css';
-import { useState } from 'react'; 
-const SettingMode = ({moveToNextStep,drawData,setDrawData}) => {
+import { drawDataContext } from '../drawDataContext';
+import { useContext, useState } from 'react'; 
+const SettingMode = ({moveToNextStep}) => {
+    const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowMode,setMode] = useState(drawData.mode);
     const [nowPassword,setPassword] = useState(drawData.sendKey);
     const [passwordErrorStatus,setPasswordError] = useState("none");

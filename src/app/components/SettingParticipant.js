@@ -1,9 +1,10 @@
 import ParticipantForm from "./ParticipantForm";
 import './SettingParticipant.css';
-import {useState,useEffect} from 'react';
+import { drawDataContext } from "../drawDataContext";
+import {useState,useEffect,useContext} from 'react';
 
-const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw,drawData,setDrawData}) => {
-    
+const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw}) => {
+    const {drawData,setDrawData} = useContext(drawDataContext);
     const formIndexArray = [...Array(drawData.participantCount)].map((x,index) => index);
     const [errorDataArray,setErrorData] = useState(formIndexArray.map(() => { return {nameErrorStatus : "none", emailErrorStatus : "none"}}));
     const [participantDataArray,setParticipantData] = useState(

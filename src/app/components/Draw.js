@@ -1,6 +1,8 @@
 import "./Draw.css";
-import { useEffect, useState } from "react";
-const Draw = ({drawData,doDraw,setDrawData}) => {
+import { useEffect, useState, useContext } from "react";
+import { drawDataContext } from "../drawDataContext";
+const Draw = ({doDraw}) => {
+    const {drawData, setDrawData} = useContext(drawDataContext);
     const [sendStatus,setSendStatus] = useState('ready');
     const nowParticipantArray = drawData.participantArray.filter(
         (participantData) => participantData.isWon === false);

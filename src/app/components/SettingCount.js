@@ -1,6 +1,8 @@
 import './SettingCount.css';
-import { useState } from 'react'; 
-const SettingCount = ({moveToPreviousStep,moveToNextStep,drawData,setDrawData}) => {
+import { useContext, useState } from 'react'; 
+import { drawDataContext } from '../drawDataContext';
+const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
+    const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
     const participantErrorMessages = {
