@@ -1,5 +1,5 @@
-import Draw from './Draw'
 import './ParticipantForm.css'
+
 const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataArray,mode}) => {
     const errorMessages = {
         "name_wrong_character" : "이름은 특수문자를 제외한 영한문자 그리고 숫자만 가능합니다.", 
