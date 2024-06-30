@@ -21,6 +21,7 @@ export default function Home() {
     participantArray: [],
     giftArray: []
   });
+  
   const moveStep = (stepIndex) => {
     setStepIndex(stepIndex);
   }  
@@ -31,7 +32,7 @@ export default function Home() {
     setStepIndex(stepIndex - 1);
   }
   const pickParticipantIndex = (participantCount) => {
-    return Math.floor(Math.random() * (participantCount - 0)) + 0
+    return Math.floor(Math.random() * participantCount)
   }
   /**
    *당첨자 추첨 함수
