@@ -13,32 +13,42 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw}) 
                 return drawData.participantArray[x];
             return { id : x, name : "", email : "", isWon : false};
         }))
-    const onClickNextButton = () => { 
+    const checkFormError = (formData,drawMode)=> {
         const nameValidationRegex = /^([a-zA-Zㄱ-ㅎ가-힣 0-9]{1,})$/;
         const emailValidationRegex = /[a-zA-Z0-9][a-zA-Z0-9_-]{0,20}@[a-zA-Z0-9]{1,}\.[a-zA-Z0-9]{1,}/
+        const errorData = {
+            isErrorOccured : false,
+            nameErrorStatus : "none",
+            emailErrorStatus : "none"
+        }
+
+        if (nameValidationRegex.test(formData.name) === false)
+        {
+            errorData.isErrorOccured = true;    
+            errorData.nameErrorStatus = "name_wrong_character";    
+        }
+        if (drawMode === "gift" && emailValidationRegex.test(formData.email) === false)
+        {
+            errorData.isErrorOccured = true;    
+            errorData.emailErrorStatus = "email_invalid";    
+        }
+        return errorData;
+    }
+
+    const onClickNextButton = () => { 
         let isErrorOccured = false
         setErrorData(errorDataArray.map((errorData, index) => {
-            let errorDataToUpdate = {
-                nameErrorStatus : "none",
-                emailErrorStatus : "none"
-            }
-            if (nameValidationRegex.test(participantDataArray[index].name) === false)
+            const errorDataToUpdate = checkFormError(participantDataArray[index],drawData.mode);
+            if (errorDataToUpdate.isErrorOccured)
             {
-                isErrorOccured = true;
-                errorDataToUpdate.nameErrorStatus = "name_wrong_character";
+                isErrorOccured = errorDataToUpdate.isErrorOccured;    
             }
-            if (drawData.mode === "gift" && emailValidationRegex.test(participantDataArray[index].email) === false)
-            {
-                isErrorOccured = true;
-                errorDataToUpdate.emailErrorStatus = "email_invalid";
-            }
-            if (isErrorOccured === true) 
-            {
-                return errorDataToUpdate
-            }
-            return {emailErrorStatus : "none" ,nameErrorStatus : "none"}
+            return {
+                emailErrorStatus : errorDataToUpdate.emailErrorStatus,
+                nameErrorStatus : errorDataToUpdate.nameErrorStatus
+            };
         }));
-        if (isErrorOccured === true)
+        if (isErrorOccured)
         {
             return;
         }
