@@ -39,10 +39,7 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw}) 
         let isErrorOccured = false
         setErrorData(errorDataArray.map((errorData, index) => {
             const errorDataToUpdate = checkFormError(participantDataArray[index],drawData.mode);
-            if (errorDataToUpdate.isErrorOccured)
-            {
-                isErrorOccured = errorDataToUpdate.isErrorOccured;    
-            }
+            isErrorOccured = errorDataToUpdate.isErrorOccured;    
             return {
                 emailErrorStatus : errorDataToUpdate.emailErrorStatus,
                 nameErrorStatus : errorDataToUpdate.nameErrorStatus

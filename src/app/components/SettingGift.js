@@ -22,6 +22,42 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
         }
         return true;
     }
+    const isValidGiftName = (giftName) => {
+        const nameValidationRegex = /^([a-zA-Zㄱ-ㅎ가-힣 0-9]{1,})$/;
+        if (nameValidationRegex.test(giftName) === false)
+        {
+            return false;
+        }
+        return true;
+    }
+    const checkFormError = (formData) => {
+        const errorData = {
+            isErrorOccured : false,
+            nameErrorStatus : "none",
+            emailErrorStatus : "none"
+        }
+        if (isValidGiftName(formData.giftName) === false)
+        {
+            errorData.isErrorOccured = true;
+            errorData.nameErrorStatus = "name_wrong_character";
+        }
+        if (isValidImageFilename(formData.giftFile.name) === false)
+        {
+            errorData.isErrorOccured = true;
+            errorData.fileErrorStatus = "invalid_file";
+        }
+        if (formData.giftFile.size > 1000000)
+        {
+            errorData.isErrorOccured = true;
+            errorData.fileErrorStatus = "invalid_file";
+        }
+        if (formData.giftFile.size === 0 && formData.giftFile.name === "파일 이름")
+        {
+            errorData.isErrorOccured = true;
+            errorData.fileErrorStatus = "no_file";
+        }
+        return errorData;
+    }
     const onClickPreviousButton = () => {
         setDrawData({...drawData,giftArray:[]})
         moveToPreviousStep();
@@ -29,37 +65,13 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
     
     const onClickDrawButton = () => {
         let isErrorOccured = false;
-        const nameValidationRegex = /^([a-zA-Zㄱ-ㅎ가-힣 0-9]{1,})$/;
         setErrorData(errorDataArray.map((errorData, index)=> {
-            const errorDataToUpdate = {
-                nameErrorStatus: "none",
-                fileErrorStatus: "none",
-            }
-            if (nameValidationRegex.test(giftDataArray[index].giftName) === false)
-            {
-                isErrorOccured = true;
-                errorDataToUpdate.nameErrorStatus = "name_wrong_character";
-            }
-            if (isValidImageFilename(giftDataArray[index].giftFile.name) === false)
-            {
-                isErrorOccured = true;
-                errorDataToUpdate.fileErrorStatus = "invalid_file";
-            }
-            if (giftDataArray[index].giftFile.size > 1000000)
-            {
-                isErrorOccured = true;
-                errorDataToUpdate.fileErrorStatus = "invalid_file";
-            }
-            if (giftDataArray[index].giftFile.size === 0 && giftDataArray[index].giftFile.name === "파일 이름")
-            {
-                isErrorOccured = true;
-                errorDataToUpdate.fileErrorStatus = "no_file";
-            }
-            if (isErrorOccured === true) 
-            {
-                return errorDataToUpdate
-            }
-            return { fileErrorStatus: "none" ,nameErrorStatus: "none" }
+            const errorDataToUpdate = checkFormError(giftDataArray[index]);
+            isErrorOccured = errorDataToUpdate.isErrorOccured;
+            return { 
+                fileErrorStatus: errorDataToUpdate.fileErrorStatus,
+                nameErrorStatus: errorDataToUpdate.nameErrorStatus 
+            };
         }))
         if (isErrorOccured === true)
         {
