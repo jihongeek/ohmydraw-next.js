@@ -16,7 +16,7 @@ export const POST = async (request)=>{
     from: EMAIL_USERNAME,
     to: req['winnerEmail'],
     subject: `축하합니다! ${req['winnerName']}님 당첨되셨습니다!`,
-    attachments : [{filename: req['giftName'], path : req['giftFile']}]
+    attachments : [{filename: req['giftFileName'], path : req['giftFile']}]
   }
   try {
     if (req['sendKey'] !== SEND_KEY) throw new Error("WrongSendKey"); 

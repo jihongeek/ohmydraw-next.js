@@ -35,6 +35,7 @@ const Draw = ({doDraw}) => {
                 "winnerName" : drawData.participantArray[drawData.nowWinnerId].name,
                 "giftName" : drawData.giftArray[0].giftName,
                 "giftFile" : file,
+                "giftFileName" : drawData.giftArray[0].giftFile.name, 
                 "sendKey" : drawData.sendKey
             })
         })
