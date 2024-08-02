@@ -34,7 +34,8 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
         const errorData = {
             isErrorOccured : false,
             nameErrorStatus : "none",
-            emailErrorStatus : "none"
+            fileErrorStatus : "none"
+
         }
         if (isValidGiftName(formData.giftName) === false)
         {
@@ -67,7 +68,11 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
         let isErrorOccured = false;
         setErrorData(errorDataArray.map((errorData, index)=> {
             const errorDataToUpdate = checkFormError(giftDataArray[index]);
-            isErrorOccured = errorDataToUpdate.isErrorOccured;
+            // 지금까지 에러가 발생하지 않았다면, 현재 에러 상태 확인해서 업데이트
+            if (isErrorOccured === false)
+            {
+                isErrorOccured = errorDataToUpdate.isErrorOccured;
+            }
             return { 
                 fileErrorStatus: errorDataToUpdate.fileErrorStatus,
                 nameErrorStatus: errorDataToUpdate.nameErrorStatus 
