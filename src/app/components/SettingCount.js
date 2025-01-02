@@ -6,7 +6,7 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
     const participantErrorMessages = {
-        "out_of_range" : "참가자 수는 1 ~ 10명 사이 이어야 합니다.",
+        "out_of_range" : "참가자 수는 1 ~ 50명 사이 이어야 합니다.",
     }
     const winnerErrorMessages = {
         "out_of_range" : "당첨자 수는 1명 보다 많고, 참가자 수 보다 같거나 작아야 합니다."
@@ -15,7 +15,7 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const [winnerErrorStatus,setWinnerErrorStatus] = useState("none");
     const onClickNextButton = () => {
         // 참가자 수, 당첨자 수가 범위를 벗어날 경우
-        if ( !(0 < nowParticipantCount && nowParticipantCount <= 10) )
+        if ( !(0 < nowParticipantCount && nowParticipantCount <= 50) )
         {
             setParticipantErrorStatus("out_of_range");
             return;
