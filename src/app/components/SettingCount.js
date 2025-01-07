@@ -59,6 +59,40 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
             setWinnerCount(parseInt(e.target.value));
         }
     }
+    const onListFileUpload = async (e) => {
+        const participantArray = []
+        const csv = await e.target.files[0].text();
+        const csvLines = csv.split('\r\n');
+        const csvHeader = csvLines[0].split(',');
+        const columnIndex = {
+          'Email' : 0,
+          'Last Name' : 0,
+          'First Name' : 0
+        }
+        for (let i = 0; i < csvHeader.length; i++) {
+          if (csvHeader[i] === 'Email') {
+            columnIndex['Email'] = i;
+          }
+          if (csvHeader[i] === 'Last Name') {
+            columnIndex['Last Name'] = i;
+          }
+          if (csvHeader[i] === 'First Name') {
+            columnIndex['First Name'] = i;
+          }
+        }
+        for (let i = 1; i < csvLines.length; i++) {
+            if (csvLines[i] === '') continue;
+            const csvLine = csvLines[i].split(',');
+            participantArray.push({
+                id : participantArray.length,
+                email : csvLine[columnIndex['Email']], 
+                name: `${csvLine[columnIndex['Last Name']]} ${csvLine[columnIndex['First Name']]}`,
+                isWon : false
+            });
+        }
+        setDrawData({...drawData, participantArray : participantArray});
+        setParticipantCount(participantArray.length);
+    }
     return (
         <div className = "setting_block SettingCount">
             <p className="setting_label">추첨설정</p>
@@ -66,9 +100,20 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
             <div className="form_wrapper">
                 <div className="participant_count_wrapper">
                     <p className="form_label participant" >참가인원</p>
-                    <input type="number" defaultValue={nowParticipantCount} onChange={onParticipantCountChange} style={{borderColor :  participantErrorStatus !== "none"? "#E63535": ''}}></input>
+                    <input type="number" value={nowParticipantCount} onChange={onParticipantCountChange} style={{borderColor :  participantErrorStatus !== "none"? "#E63535": ''}}></input>
                     { participantErrorStatus !== "none" && <p className="error_label name">{participantErrorMessages[participantErrorStatus]}</p> }
+                    <p className="form_label"> 참가 인원 리스트</p>
+                    <label htmlFor = {`file_participant_list`}>
+                        <div className = "file_upload_button">파일 업로드</div>
+                    </label>
+                    <input 
+                        type = "file" 
+                        id ={`file_participant_list`} 
+                        accept="text/csv"
+                        onChange={onListFileUpload}
+                    />
                 </div>
+
                 <div className="winner_count_wrapper">
                     <p className="form_label winner"  >당첨자</p>
                     <input type="number" defaultValue={nowWinnerCount} onChange={onWinnerCountChange} style={{borderColor :  winnerErrorStatus !== "none"? "#E63535": ''}}></input>
