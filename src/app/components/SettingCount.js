@@ -1,6 +1,7 @@
 import './SettingCount.css';
 import { useContext, useState } from 'react'; 
 import { drawDataContext } from '../drawDataContext';
+import Button from './ui/Button';
 const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
@@ -121,8 +122,8 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
                 </div>
             </div>
             <div className ="button_wrapper">
-                <button className = "backward_button previous" onClick = {onClickPreviousButton}>이전</button>
-                <button className ="forward_button next" onClick={onClickNextButton}>다음</button>
+                <Button type={'backward_button'} onClick={onClickPreviousButton}>이전</Button>
+                <Button type={'forward_button'} onClick={onClickNextButton}>다음</Button>
             </div>
         </div>
     );

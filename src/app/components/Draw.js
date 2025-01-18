@@ -1,6 +1,7 @@
 import "./Draw.css";
 import { useEffect, useState, useContext } from "react";
 import { drawDataContext } from "../drawDataContext";
+import Button from "./ui/Button";
 const Draw = ({doDraw}) => {
     const {drawData, setDrawData} = useContext(drawDataContext);
     const [sendStatus,setSendStatus] = useState('ready');
@@ -98,12 +99,12 @@ const Draw = ({doDraw}) => {
                 <p className = "win_label">당첨</p>
             </div>
             <div className = "button_wraper">
-                {((sendStatus === 'success' || (sendStatus === 'ready' && nowParticipantArray.length < 2)) || drawData.mode === "no-gift" ) ? '' : <button className="backward_button redraw" onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</button>}
-                {(sendStatus === 'success' || nowGiftArray.length === 0) || drawData.mode === "no-gift" ? '' : <button className="forward_button send_gift" onClick={onClickSendGiftButton}>경품 발송</button>}
-                {(sendStatus === 'success' && nowParticipantArray.length > 0 && nowGiftArray.length > 0) && drawData.mode === "gift" && drawData.nowRound < drawData.winnerCount - 1 ? <button className="forward_button draw_next" onClick={onClickDrawNextButton}>다음 추첨</button> : ''}
+                {((sendStatus === 'success' || (sendStatus === 'ready' && nowParticipantArray.length < 2)) || drawData.mode === "no-gift" ) ? '' : <Button type={'backward_button'} onClick={() => doDraw(true,nowParticipantArray)}>다시추첨</Button> }
+                {(sendStatus === 'success' || nowGiftArray.length === 0) || drawData.mode === "no-gift" ? '' : <Button type={'forward_button'} onClick={onClickSendGiftButton}>경품발송</Button>}
+                {(sendStatus === 'success' && nowParticipantArray.length > 0 && nowGiftArray.length > 0) && drawData.mode === "gift" && drawData.nowRound < drawData.winnerCount - 1 ? <Button type={'forward_button'} onClick={onClickDrawNextButton}>다음 추첨</Button> : ''}
                 
-                {(sendStatus === 'ready' && nowParticipantArray.length < 2) || drawData.mode === "gift" ? '' : <button className="backward_button redraw" onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</button>}
-                {sendStatus === 'ready' && nowParticipantArray.length > 1 && drawData.nowRound < drawData.winnerCount - 1 && drawData.mode==="no-gift" ? <button className="forward_button draw_next" onClick={()=>{onClickDrawNextButton(drawData.mode)}}>다음 추첨</button> : ''}
+                {(sendStatus === 'ready' && nowParticipantArray.length < 2) || drawData.mode === "gift" ? '' : <Button type={'backward_button'} onClick={ () => doDraw(true,nowParticipantArray) }>다시 추첨</Button>}
+                {sendStatus === 'ready' && nowParticipantArray.length > 1 && drawData.nowRound < drawData.winnerCount - 1 && drawData.mode==="no-gift" ? <Button type={'forward_button'} onClick={()=>{onClickDrawNextButton(drawData.mode)}}>다음 추첨</Button> : ''}
             </div>
         </div>
     );

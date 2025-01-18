@@ -2,15 +2,15 @@ import { useEffect, useState, useContext } from "react";
 import "./SettingGift.css";
 import GiftForm from "./GiftForm";
 import { drawDataContext } from "../drawDataContext";
-
+import Button from "./ui/Button";
 const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [giftDataArray,setGiftData] = useState([...Array(drawData.winnerCount)].map(
         (_, index) => { return { id : index, giftName : "", giftFile : new File([],"파일 이름")} }
     ));
     const [errorDataArray,setErrorData] = useState(giftDataArray.map(() => { return {nameErrorStatus : "none", fileErrorStatus : "none"}}));    
-    const maxNonNamePartLength = 4;
     const isValidImageFilename = (filename) => {
+        const maxNonNamePartLength = 4;
         const filenameValidationRegex = /\.JPG$|\.jpg$|\.jpeg$|\.JPEG$|\.png$|\.PNG$/
         if (filename.length < maxNonNamePartLength)
         {
@@ -113,8 +113,8 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
                 }
             </div>
             <div className ="button_wrapper">
-                <button className = "backward_button previous" onClick = {onClickPreviousButton}>이전</button>
-                <button className = "forward_button start_draw" onClick={onClickDrawButton}>추첨하기</button>
+                <Button type={'backward_button'} onClick={onClickPreviousButton}>이전</Button>
+                <Button type={'forward_button'} onClick={onClickNextButton}>추첨하기</Button>
             </div>
         </div>
     );
