@@ -1,6 +1,7 @@
 import './SettingMode.css';
 import { drawDataContext } from '../drawDataContext';
 import { useContext, useState } from 'react'; 
+import Button from './ui/Button';
 const SettingMode = ({moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowMode,setMode] = useState(drawData.mode);
@@ -87,7 +88,7 @@ const SettingMode = ({moveToNextStep}) => {
                 }
             </div>
             <div className ="button_wrapper">
-                <button className ="forward_button next" onClick={onClickNextButton}>다음</button>
+                <Button type={'forward_button'} onClick={onClickNextButton}>다음</Button>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import ParticipantForm from "./ParticipantForm";
 import './SettingParticipant.css';
 import { drawDataContext } from "../drawDataContext";
 import {useState,useEffect,useContext} from 'react';
-
+import Button from "./ui/Button";
 const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const formIndexArray = [...Array(drawData.participantCount)].map((x,index) => index);
@@ -95,8 +95,8 @@ const SettingParticiant = ({moveToNextStep,moveToPreviousStep,moveStep,doDraw}) 
             </div>
             <div className ="button_wrapper">
                 <button className = "backward_button previous" onClick = {onClickPreviousButton}>이전</button>
-                {drawData.mode === "gift" ? <button className = "forward_button next" onClick = {onClickNextButton}>다음</button> : ''}
-                {drawData.mode === "no-gift" ? <button className = "forward_button start_draw" onClick={onClickNextButton}>추첨하기</button> : ''}
+                {drawData.mode === "gift" ? <Button type={'forward_button'} onClick={onClickNextButton}>다음</Button> : ''}
+                {drawData.mode === "no-gift" ? <Button type={'forward_button'} onClick={onClickNextButton}>추첨하기</Button> : ''}
             </div>
         </div>
     );
