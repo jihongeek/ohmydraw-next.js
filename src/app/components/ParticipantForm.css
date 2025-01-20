@@ -12,7 +12,7 @@ input[type="text"].name_input {
     width : 186px;
     height: 32px;
 }
-input[type="text"].email_input { 
+input[type="email"] { 
     width : 186px;
     height: 32px;
 }

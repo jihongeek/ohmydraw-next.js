@@ -2,6 +2,7 @@ import './SettingCount.css';
 import { useContext, useState } from 'react'; 
 import { drawDataContext } from '../drawDataContext';
 import Button from './ui/Button';
+import TextInput from './ui/TextInput';
 const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
@@ -101,7 +102,12 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
             <div className="form_wrapper">
                 <div className="participant_count_wrapper">
                     <p className="form_label participant" >참가인원</p>
-                    <input type="number" value={nowParticipantCount} onChange={onParticipantCountChange} style={{borderColor :  participantErrorStatus !== "none"? "#E63535": ''}}></input>
+                    <TextInput 
+                        type={'number'} 
+                        value={nowParticipantCount} 
+                        onChange={onParticipantCountChange} 
+                        hasError={participantErrorStatus !== "none"}
+                    />
                     { participantErrorStatus !== "none" && <p className="error_label name">{participantErrorMessages[participantErrorStatus]}</p> }
                     <p className="form_label"> 참가 인원 리스트</p>
                     <label htmlFor = {`file_participant_list`}>
@@ -117,7 +123,12 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
 
                 <div className="winner_count_wrapper">
                     <p className="form_label winner"  >당첨자</p>
-                    <input type="number" defaultValue={nowWinnerCount} onChange={onWinnerCountChange} style={{borderColor :  winnerErrorStatus !== "none"? "#E63535": ''}}></input>
+                    <TextInput 
+                        type={'number'} 
+                        defaultValue={nowWinnerCount} 
+                        onChange={onWinnerCountChange} 
+                        hasError={winnerErrorStatus !== "none"}
+                    />
                     { winnerErrorStatus !== "none" && <p className="error_label winner">{winnerErrorMessages[winnerErrorStatus]}</p> }
                 </div>
             </div>

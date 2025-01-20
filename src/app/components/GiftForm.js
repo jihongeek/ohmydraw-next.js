@@ -1,4 +1,5 @@
 import './GiftForm.css'
+import TextInput from './ui/TextInput'
 const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
     const errorMessages = {
         "name_wrong_character" : "경품명은 특수문자를 제외한 영한문자 그리고 숫자만 가능합니다.", 
@@ -25,21 +26,18 @@ const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
                 <p className = "form_label gift_name">경품 이름</p>
                 <p className = "form_indicator">경품 {nowIndex+1}</p>
             </div>
-            <input 
-                className = "gift_name" 
-                type = "text" 
+            <TextInput 
+                type = {'gift_name'} 
                 defaultValue={giftDataArray[nowIndex].giftName}
                 onChange={onGiftNameChange}      
-                style={ errorData.nameErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                hasError={errorData.nameErrorStatus !== "none"}
             />
             {  errorData.nameErrorStatus !== "none" && <p className = "error_label gift_name">{errorMessages[errorData.nameErrorStatus]}</p>}
-            <p className = "form_label gift_name" style = {{display : "none"}}></p>
             <p className = "form_label gift_file" >경품 파일</p>
-            <input 
-                className= "file_name" 
-                type = "text" 
+            <TextInput
+                type= {'file_name'} 
                 placeholder={giftDataArray[nowIndex].giftFile.name}
-                style={ errorData.fileErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                hasError={errorData.fileErrorStatus !== "none"}
                 disabled
             />
             <label htmlFor = {`file_${nowIndex}`}>
