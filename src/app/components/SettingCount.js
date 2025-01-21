@@ -4,10 +4,12 @@ import { drawDataContext } from '../drawDataContext';
 import Button from './ui/Button';
 import TextInput from './ui/TextInput';
 import ErrorMessage from './ui/ErrorMessage';
+import FileUpload from './FileUpload';
 const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
+    const [participantFileName,setFileName] = useState('');
     const participantErrorMessages = {
         "out_of_range" : "참가자 수는 1 ~ 50명 사이 이어야 합니다.",
     }
@@ -63,7 +65,8 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
         }
     }
     const onListFileUpload = async (e) => {
-        const participantArray = []
+        const participantArray = [];
+        setFileName(e.target.files[0].name);
         const csv = await e.target.files[0].text();
         const csvLines = csv.split('\r\n');
         const csvHeader = csvLines[0].split(',');
@@ -115,14 +118,11 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
                         errorMessages={participantErrorMessages}
                     />
                     <p className="form_label"> 참가 인원 리스트</p>
-                    <label htmlFor = {`file_participant_list`}>
-                        <div className = "file_upload_button">파일 업로드</div>
-                    </label>
-                    <input 
-                        type = "file" 
-                        id ={`file_participant_list`} 
-                        accept="text/csv"
-                        onChange={onListFileUpload}
+                    <FileUpload
+                        fileName={participantFileName}
+                        onGiftFileChange={onListFileUpload}
+                        hasError={false}
+                        accept={'text/csv'}
                     />
                 </div>
 

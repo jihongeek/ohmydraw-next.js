@@ -1,5 +1,6 @@
 import './GiftForm.css'
 import ErrorMessage from './ui/ErrorMessage'
+import FileUpload from './FileUpload'
 import TextInput from './ui/TextInput'
 const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
     const errorMessages = {
@@ -39,21 +40,14 @@ const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
                 errorMessages={errorMessages}
             />
             <p className = "form_label gift_file" >경품 파일</p>
-            <TextInput
-                type= {'file_name'} 
-                placeholder={giftDataArray[nowIndex].giftFile.name}
-                hasError={errorData.fileErrorStatus !== "none"}
-                disabled
+            <FileUpload 
+                fileIndex={nowIndex}
+                fileName={giftDataArray[nowIndex].giftFile.name}
+                hasError={errorData.fileErrorStatus !== 'none'}
+                onGiftFileChange={onGiftFileChange}
+                accept={'image/png, image/jpeg'}
             />
-            <label htmlFor = {`file_${nowIndex}`}>
-                <div className = "file_upload_button">파일 업로드</div>
-            </label>
-            <input 
-                type = "file" 
-                id ={`file_${nowIndex}`} 
-                accept="image/png, image/jpeg"
-                onChange={onGiftFileChange}
-            />
+
             <ErrorMessage
                 type={'gift_file'}
                 errorType={errorData.fileErrorStatus}
