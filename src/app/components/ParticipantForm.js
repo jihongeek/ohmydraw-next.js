@@ -1,4 +1,5 @@
 import './ParticipantForm.css'
+import ErrorMessage from './ui/ErrorMessage'
 import TextInput from './ui/TextInput'
 
 const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataArray,mode}) => {
@@ -32,7 +33,11 @@ const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataA
                 onChange={onNameInputChange}
                 hasError={errorData.nameErrorStatus !== "none"}
             />
-            {  errorData.nameErrorStatus !== "none" && <p className = "error_label name">{errorMessages[errorData.nameErrorStatus]}</p>}
+            <ErrorMessage
+                type={'name'}
+                errorType={errorData.nameErrorStatus}
+                errorMessages={errorMessages}
+            />
             {   
                 mode === "gift"?
                 <>
@@ -43,7 +48,11 @@ const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataA
                         onChange={onEmailInputChange}
                         hasError={ errorData.emailErrorStatus !== "none"}
                     />  
-                    {  errorData.emailErrorStatus !== "none" && <p className = "error_label email">{errorMessages[errorData.emailErrorStatus]}</p>}
+                    <ErrorMessage
+                        type={'email'}
+                        errorType={errorData.emailErrorStatus}
+                        errorMessages={errorMessages}
+                    />
                 </>
                 :''
             }

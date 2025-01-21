@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { drawDataContext } from '../drawDataContext';
 import Button from './ui/Button';
 import TextInput from './ui/TextInput';
+import ErrorMessage from './ui/ErrorMessage';
 const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
@@ -108,7 +109,11 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
                         onChange={onParticipantCountChange} 
                         hasError={participantErrorStatus !== "none"}
                     />
-                    { participantErrorStatus !== "none" && <p className="error_label name">{participantErrorMessages[participantErrorStatus]}</p> }
+                    <ErrorMessage 
+                        type={'name'}
+                        errorType={participantErrorStatus}
+                        errorMessages={participantErrorMessages}
+                    />
                     <p className="form_label"> 참가 인원 리스트</p>
                     <label htmlFor = {`file_participant_list`}>
                         <div className = "file_upload_button">파일 업로드</div>
@@ -122,14 +127,18 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
                 </div>
 
                 <div className="winner_count_wrapper">
-                    <p className="form_label winner"  >당첨자</p>
+                    <p className="form_label winner">당첨자</p>
                     <TextInput 
                         type={'number'} 
                         defaultValue={nowWinnerCount} 
                         onChange={onWinnerCountChange} 
                         hasError={winnerErrorStatus !== "none"}
                     />
-                    { winnerErrorStatus !== "none" && <p className="error_label winner">{winnerErrorMessages[winnerErrorStatus]}</p> }
+                    <ErrorMessage 
+                        type={'winner'}
+                        errorType={winnerErrorStatus}
+                        errorMessages={winnerErrorMessages}
+                    />
                 </div>
             </div>
             <div className ="button_wrapper">

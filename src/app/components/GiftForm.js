@@ -1,4 +1,5 @@
 import './GiftForm.css'
+import ErrorMessage from './ui/ErrorMessage'
 import TextInput from './ui/TextInput'
 const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
     const errorMessages = {
@@ -32,7 +33,11 @@ const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
                 onChange={onGiftNameChange}      
                 hasError={errorData.nameErrorStatus !== "none"}
             />
-            {  errorData.nameErrorStatus !== "none" && <p className = "error_label gift_name">{errorMessages[errorData.nameErrorStatus]}</p>}
+            <ErrorMessage
+                type={'gift_name'}
+                errorType={errorData.nameErrorStatus}
+                errorMessages={errorMessages}
+            />
             <p className = "form_label gift_file" >경품 파일</p>
             <TextInput
                 type= {'file_name'} 
@@ -49,7 +54,11 @@ const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
                 accept="image/png, image/jpeg"
                 onChange={onGiftFileChange}
             />
-            {  errorData.fileErrorStatus !== "none" && <p className = "error_label gift_file">{errorMessages[errorData.fileErrorStatus]}</p>}
+            <ErrorMessage
+                type={'gift_file'}
+                errorType={errorData.fileErrorStatus}
+                errorMessages={errorMessages}
+            />
         </div>
     );
 }

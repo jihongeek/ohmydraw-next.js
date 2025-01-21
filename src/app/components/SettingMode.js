@@ -3,6 +3,7 @@ import { drawDataContext } from '../drawDataContext';
 import { useContext, useState } from 'react'; 
 import Button from './ui/Button';
 import TextInput from './ui/TextInput';
+import ErrorMessage from './ui/ErrorMessage';
 const SettingMode = ({moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowMode,setMode] = useState(drawData.mode);
@@ -88,7 +89,10 @@ const SettingMode = ({moveToNextStep}) => {
                             onChange={onPasswordChange} 
                             hasError={passwordErrorStatus !== 'none'} 
                         />
-                        { passwordErrorStatus !== "none" && <p className="error_label">{passwordErrorMessages[passwordErrorStatus]}</p> }
+                        <ErrorMessage
+                            errorType={passwordErrorStatus}
+                            errorMessages={passwordErrorMessages}  
+                        />
                     </div>
                     :''
                 }
