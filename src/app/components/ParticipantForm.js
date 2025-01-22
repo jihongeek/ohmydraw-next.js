@@ -1,4 +1,6 @@
 import './ParticipantForm.css'
+import ErrorMessage from './ui/ErrorMessage'
+import TextInput from './ui/TextInput'
 
 const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataArray,mode}) => {
     const errorMessages = {
@@ -25,26 +27,32 @@ const ParticipantForm = ({nowIndex,errorData,setParticipantData,participantDataA
                 <p className = "form_label name">이름</p>
                 <p className="form_indicator">참가자 {nowIndex+1}</p>
             </div>
-            <input 
-                className = "name_input" 
-                type = "text" 
+            <TextInput
+                type="name_input"
                 defaultValue={participantDataArray[nowIndex].name}
                 onChange={onNameInputChange}
-                style={ errorData.nameErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                hasError={errorData.nameErrorStatus !== "none"}
             />
-            {  errorData.nameErrorStatus !== "none" && <p className = "error_label name">{errorMessages[errorData.nameErrorStatus]}</p>}
+            <ErrorMessage
+                type={'name'}
+                errorType={errorData.nameErrorStatus}
+                errorMessages={errorMessages}
+            />
             {   
                 mode === "gift"?
                 <>
                     <p className = "form_label email">이메일</p>
-                    <input 
-                        className = "email_input" 
-                        type = "text" 
+                    <TextInput 
+                        type = "email_input" 
                         defaultValue={participantDataArray[nowIndex].email}
                         onChange={onEmailInputChange}
-                        style={ errorData.emailErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                        hasError={ errorData.emailErrorStatus !== "none"}
                     />  
-                    {  errorData.emailErrorStatus !== "none" && <p className = "error_label email">{errorMessages[errorData.emailErrorStatus]}</p>}
+                    <ErrorMessage
+                        type={'email'}
+                        errorType={errorData.emailErrorStatus}
+                        errorMessages={errorMessages}
+                    />
                 </>
                 :''
             }

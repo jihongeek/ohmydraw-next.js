@@ -2,10 +2,14 @@ import './SettingCount.css';
 import { useContext, useState } from 'react'; 
 import { drawDataContext } from '../drawDataContext';
 import Button from './ui/Button';
+import TextInput from './ui/TextInput';
+import ErrorMessage from './ui/ErrorMessage';
+import FileUpload from './FileUpload';
 const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowParticipantCount,setParticipantCount] = useState(drawData.participantCount);
     const [nowWinnerCount,setWinnerCount] = useState(drawData.winnerCount);
+    const [participantFileName,setFileName] = useState('');
     const participantErrorMessages = {
         "out_of_range" : "참가자 수는 1 ~ 50명 사이 이어야 합니다.",
     }
@@ -61,7 +65,8 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
         }
     }
     const onListFileUpload = async (e) => {
-        const participantArray = []
+        const participantArray = [];
+        setFileName(e.target.files[0].name);
         const csv = await e.target.files[0].text();
         const csvLines = csv.split('\r\n');
         const csvHeader = csvLines[0].split(',');
@@ -101,24 +106,39 @@ const SettingCount = ({moveToPreviousStep,moveToNextStep}) => {
             <div className="form_wrapper">
                 <div className="participant_count_wrapper">
                     <p className="form_label participant" >참가인원</p>
-                    <input type="number" value={nowParticipantCount} onChange={onParticipantCountChange} style={{borderColor :  participantErrorStatus !== "none"? "#E63535": ''}}></input>
-                    { participantErrorStatus !== "none" && <p className="error_label name">{participantErrorMessages[participantErrorStatus]}</p> }
+                    <TextInput 
+                        type={'number'} 
+                        value={nowParticipantCount} 
+                        onChange={onParticipantCountChange} 
+                        hasError={participantErrorStatus !== "none"}
+                    />
+                    <ErrorMessage 
+                        type={'name'}
+                        errorType={participantErrorStatus}
+                        errorMessages={participantErrorMessages}
+                    />
                     <p className="form_label"> 참가 인원 리스트</p>
-                    <label htmlFor = {`file_participant_list`}>
-                        <div className = "file_upload_button">파일 업로드</div>
-                    </label>
-                    <input 
-                        type = "file" 
-                        id ={`file_participant_list`} 
-                        accept="text/csv"
-                        onChange={onListFileUpload}
+                    <FileUpload
+                        fileName={participantFileName}
+                        onGiftFileChange={onListFileUpload}
+                        hasError={false}
+                        accept={'text/csv'}
                     />
                 </div>
 
                 <div className="winner_count_wrapper">
-                    <p className="form_label winner"  >당첨자</p>
-                    <input type="number" defaultValue={nowWinnerCount} onChange={onWinnerCountChange} style={{borderColor :  winnerErrorStatus !== "none"? "#E63535": ''}}></input>
-                    { winnerErrorStatus !== "none" && <p className="error_label winner">{winnerErrorMessages[winnerErrorStatus]}</p> }
+                    <p className="form_label winner">당첨자</p>
+                    <TextInput 
+                        type={'number'} 
+                        defaultValue={nowWinnerCount} 
+                        onChange={onWinnerCountChange} 
+                        hasError={winnerErrorStatus !== "none"}
+                    />
+                    <ErrorMessage 
+                        type={'winner'}
+                        errorType={winnerErrorStatus}
+                        errorMessages={winnerErrorMessages}
+                    />
                 </div>
             </div>
             <div className ="button_wrapper">

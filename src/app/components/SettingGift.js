@@ -114,7 +114,7 @@ const SettingGift = ({ moveToPreviousStep,doDraw,moveToNextStep }) => {
             </div>
             <div className ="button_wrapper">
                 <Button type={'backward_button'} onClick={onClickPreviousButton}>이전</Button>
-                <Button type={'forward_button'} onClick={onClickNextButton}>추첨하기</Button>
+                <Button type={'forward_button'} onClick={onClickDrawButton}>추첨하기</Button>
             </div>
         </div>
     );

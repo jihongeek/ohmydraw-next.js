@@ -2,6 +2,8 @@ import './SettingMode.css';
 import { drawDataContext } from '../drawDataContext';
 import { useContext, useState } from 'react'; 
 import Button from './ui/Button';
+import TextInput from './ui/TextInput';
+import ErrorMessage from './ui/ErrorMessage';
 const SettingMode = ({moveToNextStep}) => {
     const {drawData,setDrawData} = useContext(drawDataContext);
     const [nowMode,setMode] = useState(drawData.mode);
@@ -81,8 +83,16 @@ const SettingMode = ({moveToNextStep}) => {
                     nowMode === "gift"?
                     <div className="participant_count_wrapper">
                         <p className="form_label participant" >비밀번호</p>
-                        <input type="password" defaultValue={drawData.sendKey} onChange={onPasswordChange} style={{borderColor :  passwordErrorStatus !== "none"? "#E63535": ''}}/>
-                        { passwordErrorStatus !== "none" && <p className="error_label">{passwordErrorMessages[passwordErrorStatus]}</p> }
+                        <TextInput 
+                            type={'password'} 
+                            defaultValue={drawData.sendKey} 
+                            onChange={onPasswordChange} 
+                            hasError={passwordErrorStatus !== 'none'} 
+                        />
+                        <ErrorMessage
+                            errorType={passwordErrorStatus}
+                            errorMessages={passwordErrorMessages}  
+                        />
                     </div>
                     :''
                 }

@@ -1,4 +1,7 @@
 import './GiftForm.css'
+import ErrorMessage from './ui/ErrorMessage'
+import FileUpload from './FileUpload'
+import TextInput from './ui/TextInput'
 const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
     const errorMessages = {
         "name_wrong_character" : "경품명은 특수문자를 제외한 영한문자 그리고 숫자만 가능합니다.", 
@@ -25,33 +28,31 @@ const GiftForm = ({giftDataArray,errorData,setGiftData,nowIndex}) => {
                 <p className = "form_label gift_name">경품 이름</p>
                 <p className = "form_indicator">경품 {nowIndex+1}</p>
             </div>
-            <input 
-                className = "gift_name" 
-                type = "text" 
+            <TextInput 
+                type = {'gift_name'} 
                 defaultValue={giftDataArray[nowIndex].giftName}
                 onChange={onGiftNameChange}      
-                style={ errorData.nameErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
+                hasError={errorData.nameErrorStatus !== "none"}
             />
-            {  errorData.nameErrorStatus !== "none" && <p className = "error_label gift_name">{errorMessages[errorData.nameErrorStatus]}</p>}
-            <p className = "form_label gift_name" style = {{display : "none"}}></p>
+            <ErrorMessage
+                type={'gift_name'}
+                errorType={errorData.nameErrorStatus}
+                errorMessages={errorMessages}
+            />
             <p className = "form_label gift_file" >경품 파일</p>
-            <input 
-                className= "file_name" 
-                type = "text" 
-                placeholder={giftDataArray[nowIndex].giftFile.name}
-                style={ errorData.fileErrorStatus !== "none" ? {borderColor : "#E63535"} : null }
-                disabled
+            <FileUpload 
+                fileIndex={nowIndex}
+                fileName={giftDataArray[nowIndex].giftFile.name}
+                hasError={errorData.fileErrorStatus !== 'none'}
+                onGiftFileChange={onGiftFileChange}
+                accept={'image/png, image/jpeg'}
             />
-            <label htmlFor = {`file_${nowIndex}`}>
-                <div className = "file_upload_button">파일 업로드</div>
-            </label>
-            <input 
-                type = "file" 
-                id ={`file_${nowIndex}`} 
-                accept="image/png, image/jpeg"
-                onChange={onGiftFileChange}
+
+            <ErrorMessage
+                type={'gift_file'}
+                errorType={errorData.fileErrorStatus}
+                errorMessages={errorMessages}
             />
-            {  errorData.fileErrorStatus !== "none" && <p className = "error_label gift_file">{errorMessages[errorData.fileErrorStatus]}</p>}
         </div>
     );
 }
