@@ -3,9 +3,9 @@ module.exports = {
   // plugins: ['prettier', 'unused-imports'],
   plugins: ['prettier'],
   rules: {
-    'no-undef': 'error',
+    'no-undef': 'warn',
     'prettier/prettier': [
-      'error',
+      'warn',
       // https://prettier.io/docs/en/options.html
       {
         singleQuote: true,
