@@ -1,5 +1,5 @@
 import './Draw.css';
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { drawDataContext } from '../drawDataContext';
 import Button from './ui/Button';
 const Draw = ({ doDraw }) => {
@@ -7,6 +7,14 @@ const Draw = ({ doDraw }) => {
   const [sendStatus, setSendStatus] = useState('ready');
   const nowParticipants = drawData.participantArray.filter(
     (participant) => participant.isWon === false
+  );
+  const leftParticipants = drawData.participantArray.map(
+    (participant, index) => {
+      if (index === drawData.nowWinnerId) {
+        return { ...participant, isWon: true };
+      }
+      return participant;
+    }
   );
   const nowGifts = [...drawData.giftArray];
   const sendStatusMessages = {
@@ -42,14 +50,6 @@ const Draw = ({ doDraw }) => {
       setSendStatus('failed');
       return;
     }
-    const leftParticipants = drawData.participantArray.map(
-      (participant, index) => {
-        if (index === drawData.nowWinnerId) {
-          return { ...participant, isWon: true };
-        }
-        return participant;
-      }
-    );
     nowGifts.shift();
     setDrawData({
       ...drawData,
@@ -58,13 +58,13 @@ const Draw = ({ doDraw }) => {
     });
     setSendStatus('success');
   };
-  const onClickDrawNextButton = (mode) => {
-    if (mode === 'no-gift') {
-      setSendStatus('success');
-      return;
-    }
+  const onClickDrawNextButton = () => {
     setSendStatus('ready');
-    doDraw(false, nowParticipants);
+    setDrawData({ ...drawData, participantArray: leftParticipants });
+    doDraw(
+      false,
+      leftParticipants.filter((participant) => participant.isWon === false)
+    );
   };
   return (
     <div className='Draw'>
@@ -90,60 +90,29 @@ const Draw = ({ doDraw }) => {
         <p className='win_label'>당첨</p>
       </div>
       <div className='button_wraper'>
-        {sendStatus === 'success' ||
-        (sendStatus === 'ready' && nowParticipants.length < 2) ||
-        drawData.mode === 'no-gift' ? (
-          ''
-        ) : (
+        {nowParticipants.length > 1 && sendStatus !== 'success' ? (
           <Button
             type={'backward_button'}
             onClick={() => doDraw(true, nowParticipants)}
           >
             다시추첨
           </Button>
-        )}
-        {sendStatus === 'success' ||
-        nowGifts.length === 0 ||
-        drawData.mode === 'no-gift' ? (
-          ''
         ) : (
+          ''
+        )}
+        {nowGifts.length > 0 &&
+        drawData.mode === 'gift' &&
+        sendStatus !== 'success' ? (
           <Button type={'forward_button'} onClick={onClickSendGiftButton}>
             경품발송
           </Button>
+        ) : (
+          ''
         )}
-        {sendStatus === 'success' &&
-        nowParticipants.length > 0 &&
-        nowGifts.length > 0 &&
-        drawData.mode === 'gift' &&
-        drawData.nowRound < drawData.winnerCount - 1 ? (
+        {nowParticipants.length > 1 &&
+        (drawData.mode === 'no-gift' || sendStatus === 'success') ? (
           <Button type={'forward_button'} onClick={onClickDrawNextButton}>
-            다음 추첨
-          </Button>
-        ) : (
-          ''
-        )}
-        {(sendStatus === 'ready' && nowParticipants.length < 2) ||
-        drawData.mode === 'gift' ? (
-          ''
-        ) : (
-          <Button
-            type={'backward_button'}
-            onClick={() => doDraw(true, nowParticipants)}
-          >
-            다시 추첨
-          </Button>
-        )}
-        {sendStatus === 'ready' &&
-        nowParticipants.length > 1 &&
-        drawData.nowRound < drawData.winnerCount - 1 &&
-        drawData.mode === 'no-gift' ? (
-          <Button
-            type={'forward_button'}
-            onClick={() => {
-              onClickDrawNextButton(drawData.mode);
-            }}
-          >
-            다음 추첨
+            다음추첨
           </Button>
         ) : (
           ''
