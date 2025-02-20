@@ -16,8 +16,10 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@next/env": "^15.1.7",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
