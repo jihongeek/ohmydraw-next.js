@@ -110,7 +110,9 @@ const SettingMode = ({ moveToNextStep }) => {
         </div>
         {nowMode === 'gift' ? (
           <div className='participant_count_wrapper'>
-            <label htmlFor='password'>비밀번호</label>
+            <label className='form_label' htmlFor='password'>
+              비밀번호
+            </label>
             <TextInput
               id={'password'}
               type={'password'}
