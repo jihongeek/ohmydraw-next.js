@@ -112,8 +112,11 @@ function SettingCount({ moveToPreviousStep, moveToNextStep }) {
       <p className='step_label'>인원 정하기</p>
       <div className='form_wrapper'>
         <div className='participant_count_wrapper'>
-          <p className='form_label participant'>참가인원</p>
+          <label className='form_label participant' htmlFor='participant_count'>
+            참가인원
+          </label>
           <TextInput
+            id={'participant_count'}
             type={'number'}
             value={nowParticipantCount}
             onChange={onParticipantCountChange}
@@ -124,7 +127,9 @@ function SettingCount({ moveToPreviousStep, moveToNextStep }) {
             errorType={errors.participant}
             errorMessages={errorMessages.participant}
           />
-          <p className='form_label'> 참가 인원 리스트</p>
+          <label className='form_label' htmlFor='file_0'>
+            참가 인원 리스트
+          </label>
           <FileUpload
             fileName={participantFileName}
             onGiftFileChange={onListFileUpload}
@@ -134,8 +139,11 @@ function SettingCount({ moveToPreviousStep, moveToNextStep }) {
         </div>
 
         <div className='winner_count_wrapper'>
-          <p className='form_label winner'>당첨자</p>
+          <label className='form_label winner' htmlFor='winner_count'>
+            당첨자
+          </label>
           <TextInput
+            id={'winner_count'}
             type={'number'}
             defaultValue={nowWinnerCount}
             onChange={onWinnerCountChange}
