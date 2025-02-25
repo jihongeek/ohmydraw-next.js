@@ -127,11 +127,10 @@ function SettingCount({ moveToPreviousStep, moveToNextStep }) {
             errorType={errors.participant}
             errorMessages={errorMessages.participant}
           />
-          <label className='form_label' htmlFor='list_upload'>
+          <label className='form_label' htmlFor='file_0'>
             참가 인원 리스트
           </label>
           <FileUpload
-            id={'list_upload'}
             fileName={participantFileName}
             onGiftFileChange={onListFileUpload}
             hasError={false}

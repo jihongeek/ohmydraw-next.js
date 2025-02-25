@@ -15,7 +15,7 @@ export default function FileUpload({
         hasError={hasError}
         disabled
       />
-      <label id={props.id} htmlFor={`file_${fileIndex}`}>
+      <label htmlFor={`file_${fileIndex}`}>
         <div className='file_upload_button'>파일 업로드</div>
       </label>
       <input
