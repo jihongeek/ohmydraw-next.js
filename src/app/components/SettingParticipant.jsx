@@ -68,7 +68,7 @@ const SettingParticiant = ({
     setDrawData({ ...drawData, participantArray: [] });
     moveToPreviousStep();
   };
-
+  // 여기가 꼭 필요할까?
   useEffect(() => {
     if (drawData.mode === 'no-gift' && drawData.participantArray.length > 0) {
       doDraw(false);
