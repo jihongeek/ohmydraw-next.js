@@ -35,10 +35,16 @@ const ParticipantForm = ({
   return (
     <div className='ParticipantForm'>
       <div className='form_start'>
-        <p className='form_label name'>이름</p>
+        <label
+          className='form_label name'
+          htmlFor={`participant_name_${formIndex}`}
+        >
+          이름
+        </label>
         <p className='form_indicator'>참가자 {formIndex + 1}</p>
       </div>
       <TextInput
+        id={`participant_name_${formIndex}`}
         type='name_input'
         defaultValue={participants[formIndex].name}
         onChange={onNameInputChange}
@@ -51,8 +57,14 @@ const ParticipantForm = ({
       />
       {mode === 'gift' ? (
         <>
-          <p className='form_label email'>이메일</p>
+          <label
+            className='form_label email'
+            htmlFor={`email_name_${formIndex}`}
+          >
+            이메일
+          </label>
           <TextInput
+            id={`email_name_${formIndex}`}
             type='email_input'
             defaultValue={participants[formIndex].email}
             onChange={onEmailInputChange}
